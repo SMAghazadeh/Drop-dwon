@@ -8,7 +8,7 @@ import {
     ListItemText,
 } from "@mui/material";
 import BookIcon from "@mui/icons-material/Book";
-import { BookOpen } from "lucide-react";
+import { BookOpen, User } from "lucide-react";
 
 function BookAutocomplete({
     books,
@@ -21,7 +21,7 @@ function BookAutocomplete({
     return (
         <div className="flex flex-col gap-1 justify-center items-center h-svh">
             <div>
-                <BookOpen size={80} className="stroke-[0.7] stroke-blue-300 cursor-pointer" />
+                <User  size={80} className="stroke-[0.7] stroke-blue-300 cursor-pointer"/>
             </div>
             <div className="min-w-lg shadow-2xl">
                 <Autocomplete
@@ -35,11 +35,11 @@ function BookAutocomplete({
                     onInputChange={(event, newInputValue) => {
                         onQueryChange(newInputValue);
                     }}
-                    groupBy={(option) => option.title} 
+                    groupBy={(option) => option.title}
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            label="انتخاب کتاب"
+                            label="انتخاب کاربر"
                             variant="outlined"
                             InputProps={{
                                 ...params.InputProps,
@@ -55,7 +55,7 @@ function BookAutocomplete({
                     renderOption={(props, option) => (
                         <ListItem {...props} key={option.key}>
                             <ListItemIcon>
-                                <BookOpen />
+                                <User />
                             </ListItemIcon>
                             <ListItemText primary={option.title}  />
                         </ListItem>
