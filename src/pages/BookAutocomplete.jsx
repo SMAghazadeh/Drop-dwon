@@ -7,7 +7,8 @@ import {
     ListItemIcon,
     ListItemText,
 } from "@mui/material";
-import { BookOpen } from 'lucide-react';
+import BookIcon from "@mui/icons-material/Book";
+import { BookOpen } from "lucide-react";
 
 function BookAutocomplete({
     books,
@@ -18,25 +19,27 @@ function BookAutocomplete({
     onFetchMoreData,
 }) {
     return (
-        <div className="flex flex-col gap-1 justify-center items-center h-svh ">
+        <div className="flex flex-col gap-1 justify-center items-center h-svh">
             <div>
-                <BookOpen size={80} className="stroke-[0.7] stroke-blue-300 cursor-pointer " />
+                <BookOpen size={80} className="stroke-[0.7] stroke-blue-300 cursor-pointer" />
             </div>
             <div className="min-w-lg shadow-2xl">
                 <Autocomplete
-                    multiple
+                    multiple 
                     freeSolo
+                    disableCloseOnSelect 
                     options={books}
-                    getOptionLabel={(option) => option?.title ?? option}
+                    getOptionLabel={(option) => option?.title ? `${option.title} ` : option}
                     value={selectedBook || []} 
                     onChange={(event, newValue) => onSelectedBookChange(newValue)}
                     onInputChange={(event, newInputValue) => {
                         onQueryChange(newInputValue);
                     }}
+                    groupBy={(option) => option.title} 
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            label={selectedBook.length > 0 ? `انتخاب شده (${selectedBook.length})` : "انتخاب کتاب"}
+                            label="انتخاب کتاب"
                             variant="outlined"
                             InputProps={{
                                 ...params.InputProps,
@@ -50,11 +53,11 @@ function BookAutocomplete({
                         />
                     )}
                     renderOption={(props, option) => (
-                        <ListItem {...props}>
+                        <ListItem {...props} key={option.key}>
                             <ListItemIcon>
                                 <BookOpen />
                             </ListItemIcon>
-                            <ListItemText primary={option?.title} />
+                            <ListItemText primary={option.title}  />
                         </ListItem>
                     )}
                     ListboxProps={{
