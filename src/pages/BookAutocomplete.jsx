@@ -7,9 +7,7 @@ import {
     ListItemIcon,
     ListItemText,
 } from "@mui/material";
-import BookIcon from "@mui/icons-material/Book";
 import { BookOpen } from 'lucide-react';
-
 
 function BookAutocomplete({
     books,
@@ -22,14 +20,15 @@ function BookAutocomplete({
     return (
         <div className="flex flex-col gap-1 justify-center items-center h-svh ">
             <div>
-                <BookOpen size={80} className="stroke-[0.7] stroke-blue-300 cursor-pointer "/>
+                <BookOpen size={80} className="stroke-[0.7] stroke-blue-300 cursor-pointer " />
             </div>
-            <div className="min-w-lg  shadow-2xl  ">
+            <div className="min-w-lg shadow-2xl">
                 <Autocomplete
+                    multiple
                     freeSolo
                     options={books}
-                    getOptionLabel={(option) => option.title}
-                    value={selectedBook}
+                    getOptionLabel={(option) => option?.title ?? option}
+                    value={selectedBook || []} 
                     onChange={(event, newValue) => onSelectedBookChange(newValue)}
                     onInputChange={(event, newInputValue) => {
                         onQueryChange(newInputValue);
@@ -37,7 +36,7 @@ function BookAutocomplete({
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            label={`انتخاب کتاب`}
+                            label={selectedBook.length > 0 ? `انتخاب شده (${selectedBook.length})` : "انتخاب کتاب"}
                             variant="outlined"
                             InputProps={{
                                 ...params.InputProps,
@@ -55,7 +54,7 @@ function BookAutocomplete({
                             <ListItemIcon>
                                 <BookOpen />
                             </ListItemIcon>
-                            <ListItemText primary={option.title} /> {/* عنوان کتاب */}
+                            <ListItemText primary={option?.title} />
                         </ListItem>
                     )}
                     ListboxProps={{

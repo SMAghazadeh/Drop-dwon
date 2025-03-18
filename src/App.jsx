@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 function App() {
   const [books, setBooks] = useState([]);
   const [query, setQuery] = useState("");
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedBook, setSelectedBook] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -26,19 +26,19 @@ function App() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://openlibrary.org/search.json?q=${searchQuery || "programming"}&limit=20&page=${currentPage}`
+        `https://dummyjson.com/users/search?q=${searchQuery}&limit=20&page=${currentPage}`
       );
-
-      const newBooks = response.data.docs.map((book) => ({
-        key: book.key,
-        title: book.title,
+      const newBooks = response?.data?.users?.map((user) => ({
+        key: user?.id,
+        title: user?.firstName ,
       }));
-
+      
+      console.log('response',newBooks);
       setBooks((prevBooks) =>
         currentPage === 1 ? newBooks : [...prevBooks, ...newBooks]
       );
 
-      setHasMore(response.data.docs.length > 0);
+      setHasMore(response?.data?.users?.length > 0);
     } catch (error) {
       console.error("Error fetching books:", error);
     } finally {
