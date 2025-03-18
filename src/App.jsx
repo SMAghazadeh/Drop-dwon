@@ -33,7 +33,6 @@ function App() {
         title: user?.firstName ,
       }));
       
-      console.log('response',newBooks);
       setBooks((prevBooks) =>
         currentPage === 1 ? newBooks : [...prevBooks, ...newBooks]
       );
